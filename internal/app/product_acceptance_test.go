@@ -1,4 +1,4 @@
-//go:build windows
+//go:build windows || darwin
 
 package app
 
@@ -25,7 +25,7 @@ func acceptanceService(t *testing.T) (*Service, string, *fakeProcessManager) {
 	if err != nil {
 		t.Fatal("create temporary profile store")
 	}
-	networks, err := brnetwork.NewStore(root)
+	networks, err := brnetwork.NewStoreWithProtector(root, testSecretProtector{})
 	if err != nil {
 		t.Fatal("create temporary network store")
 	}

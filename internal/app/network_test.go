@@ -1,4 +1,4 @@
-//go:build windows
+//go:build windows || darwin
 
 package app
 
@@ -171,7 +171,7 @@ func TestMissingOrCorruptSecretBlocksReadinessAndLaunch(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			networks, err := brnetwork.NewStore(root)
+			networks, err := brnetwork.NewStoreWithProtector(root, testSecretProtector{})
 			if err != nil {
 				t.Fatal(err)
 			}

@@ -34,3 +34,8 @@ build/bin/
 /data/
 /build/portable-staging/
 *.zip
+
+# Frontend build output and Wails dependency cache.
+/frontend/dist/*
+!/frontend/dist/.gitkeep
+/frontend/package.json.md5

@@ -24,9 +24,11 @@ type dataBlob struct {
 	data *byte
 }
 
+func newSecretProtector() SecretProtector { return newDPAPIProtector() }
+
 type dpapiProtector struct{}
 
-func newDPAPIProtector() secretProtector {
+func newDPAPIProtector() SecretProtector {
 	return dpapiProtector{}
 }
 

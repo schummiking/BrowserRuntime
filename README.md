@@ -1,4 +1,14 @@
-# BrowserRuntime 0.1.0 — Windows x64 Portable
+# BrowserRuntime — macOS and Windows
+
+This fork adds a native macOS app while retaining the upstream Windows build.
+
+**Mac:** download the universal DMG or ZIP from [Releases](https://github.com/schummiking/BrowserRuntime/releases), then open BrowserRuntime. Requires macOS 13+. See [Mac setup, data storage, engine versions, and build instructions](docs/MACOS_README.md).
+
+macOS uses Wails/WebKit, native browser processes, file locks, and Keychain-backed
+proxy encryption. Apple Silicon is tested on hardware; the Intel slice is
+build-verified. The app is ad-hoc signed and is not Apple-notarized.
+
+## Upstream Windows x64 Portable
 
 A local, single-user browser profile manager with native CloakBrowser launch,
 English/简体中文 UI, persistent profiles, stable profile identity, and optional

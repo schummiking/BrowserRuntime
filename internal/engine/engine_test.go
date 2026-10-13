@@ -2,6 +2,7 @@ package engine
 
 import (
 	"errors"
+	"path/filepath"
 	"testing"
 )
 
@@ -15,7 +16,7 @@ func TestValidateLaunchSpecRejectsForbiddenAutomationAndCDPFlags(t *testing.T) {
 	}
 	for _, argument := range forbidden {
 		t.Run(argument, func(t *testing.T) {
-			spec := LaunchSpec{ExecutablePath: `C:\Browser\chrome.exe`, Arguments: []string{argument}}
+			spec := LaunchSpec{ExecutablePath: filepath.Join(t.TempDir(), "chrome"), Arguments: []string{argument}}
 			if err := ValidateLaunchSpec(spec); !errors.Is(err, ErrForbiddenLaunchArgument) {
 				t.Fatalf("ValidateLaunchSpec(%q) error = %v, want ErrForbiddenLaunchArgument", argument, err)
 			}
@@ -25,7 +26,7 @@ func TestValidateLaunchSpecRejectsForbiddenAutomationAndCDPFlags(t *testing.T) {
 
 func TestValidateLaunchSpecAcceptsNativeArguments(t *testing.T) {
 	spec := LaunchSpec{
-		ExecutablePath: `C:\Browser\chrome.exe`,
+		ExecutablePath: filepath.Join(t.TempDir(), "chrome"),
 		Arguments: []string{
 			`--user-data-dir=C:\profiles\br_0123456789abcdef0123456789abcdef\browser-data`,
 			"--fingerprint=12345",

@@ -48,9 +48,9 @@ func createTestProfile(t *testing.T, root, name string) *profile.Profile {
 
 func newTestStore(t *testing.T, root string) *Store {
 	t.Helper()
-	store, err := newStoreWithProtector(root, testProtector{})
+	store, err := NewStoreWithProtector(root, testProtector{})
 	if err != nil {
-		t.Fatalf("newStoreWithProtector() error = %v", err)
+		t.Fatalf("NewStoreWithProtector() error = %v", err)
 	}
 	return store
 }

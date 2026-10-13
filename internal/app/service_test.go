@@ -1,4 +1,4 @@
-//go:build windows
+//go:build windows || darwin
 
 package app
 
@@ -126,7 +126,7 @@ func newTestService(t *testing.T) (*Service, *profile.Store, *brnetwork.Store, *
 	if err != nil {
 		t.Fatalf("profile.NewStore() error = %v", err)
 	}
-	networks, err := brnetwork.NewStore(root)
+	networks, err := brnetwork.NewStoreWithProtector(root, testSecretProtector{})
 	if err != nil {
 		t.Fatalf("network.NewStore() error = %v", err)
 	}

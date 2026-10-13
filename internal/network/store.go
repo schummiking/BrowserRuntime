@@ -25,7 +25,8 @@ const (
 	maxSecretBytes = 1 << 20
 )
 
-type secretProtector interface {
+// SecretProtector provides platform credential encryption independently of storage.
+type SecretProtector interface {
 	Protect([]byte) ([]byte, error)
 	Unprotect([]byte) ([]byte, error)
 }
@@ -34,20 +35,20 @@ type ConnectionTester interface {
 	TestConnection(context.Context, *ResolvedProxy) (ConnectionResult, error)
 }
 
-// Store persists profile-scoped network configuration and DPAPI-protected secrets.
+// Store persists profile-scoped network configuration and platform-protected secrets.
 type Store struct {
 	root       string
 	profiles   *profile.Store
-	protector  secretProtector
+	protector  SecretProtector
 	mu         sync.Mutex
 	renameFile func(string, string) error
 }
 
 func NewStore(profilesRoot string) (*Store, error) {
-	return newStoreWithProtector(profilesRoot, newDPAPIProtector())
+	return NewStoreWithProtector(profilesRoot, newSecretProtector())
 }
 
-func newStoreWithProtector(profilesRoot string, protector secretProtector) (*Store, error) {
+func NewStoreWithProtector(profilesRoot string, protector SecretProtector) (*Store, error) {
 	if protector == nil {
 		return nil, errors.New("secret protector is required")
 	}
